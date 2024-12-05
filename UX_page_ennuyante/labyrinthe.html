@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouton Fuyant</title>
+    <div id="curseur"
+        style="position: absolute; top : 100px; width: 10px; height: 10px; background-color: blue; border-radius: 50%; pointer-events: none;">
+    </div>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        #bouton {
+            position: absolute;
+            /* Nécessaire pour le déplacement */
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="bouton">Attrape-moi !</button>
+
+    <script>
+        let bouton = document.getElementById("bouton");
+        let cible = document.getElementById("curseur")
+
+        document.addEventListener("mousemove", (event) => {
+            // Position du curseur
+            let mouseX = event.clientX;
+            let mouseY = event.clientY;
+
+            // Position du bouton
+            let boutonRect = bouton.getBoundingClientRect();
+            let boutonX = boutonRect.left + boutonRect.width / 2; // Centre du bouton
+            let boutonY = boutonRect.top + boutonRect.height / 2;
+
+            // Calcul de la distance entre la souris et le bouton
+            let distanceX = mouseX - boutonX;
+            let distanceY = mouseY - boutonY;
+            let distance = Math.sqrt(distanceX ** 2 + distanceY ** 2); // Distance euclidienne
+
+            // Si la souris est trop proche, déplacer le bouton
+            let seuil = 100; // Distance minimum avant que le bouton "fuit"
+            if (distance < seuil) {
+                // Déplacement du bouton dans la direction opposée
+                let offsetX = -distanceX * 0.3; // Multiplier pour ajuster la vitesse
+                let offsetY = -distanceY * 0.3;
+
+                let newLeft = boutonRect.left + offsetX;
+                let newTop = boutonRect.top + offsetY;
+
+                // Limiter les mouvements pour ne pas sortir de l'écran
+                let maxWidth = window.innerWidth - boutonRect.width;
+                let maxHeight = window.innerHeight - boutonRect.height;
+
+                bouton.style.left = Math.min(Math.max(newLeft, 0), maxWidth) + "px";
+                bouton.style.top = Math.min(Math.max(newTop, 0), maxHeight) + "px";
+
+            function deplacerBouton() {
+                // Obtenir la largeur et la hauteur de la fenêtre
+                const largeurFenetre = window.innerWidth;
+                const hauteurFenetre = window.innerHeight;
+                const largeurBouton = cible.offsetWidth;
+                const hauteurBouton = cible.offsetHeight;
+
+                // Calculer une nouvelle position aléatoire pour le bouton
+                const nouvellePositionX = Math.random() * (largeurFenetre - largeurBouton);
+                const nouvellePositionY = Math.random() * (hauteurFenetre - hauteurBouton);
+
+                // Appliquer les nouvelles positions au bouton
+                cible.style.left = nouvellePositionX + "px";
+                cible.style.top = nouvellePositionY + "px";
+            }
+
+            // Déplacer le bouton toutes les 2 secondes
+            setInterval(deplacerBouton(), 2000);
+        }
+        });
+    </script>
+</body>
+
+</html>
