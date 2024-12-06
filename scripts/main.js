@@ -23,7 +23,7 @@ const bg = document.querySelector(".bg");
 //     start: "top top",
 //     end: "bottom bottom",
 //     scrub: 1,
-//     markers: true
+//
 //   }
 // });
 
@@ -35,7 +35,6 @@ gsap.to(veinImg, {
     toggleActions: "restart reverse play reverse",
     start: "top 90%",
     end: "bottom 30%",
-    markers: true
   }
 });
 
@@ -47,7 +46,6 @@ gsap.to(thermoImg, {
     toggleActions: "restart reverse play reverse",
     start: "top 90%",
     end: "bottom 30%",
-    markers: true
   }
 });
 
@@ -59,7 +57,6 @@ gsap.to(bg, {
     toggleActions: "restart reverse play reverse",
     start: "top 90%",
     end: "bottom 90%",
-    markers: true
   }
 });
 
@@ -71,7 +68,6 @@ gsap.to(bg, {
     toggleActions: "restart reverse play reverse",
     start: "top 90%",
     end: "bottom 90%",
-    markers: true
   }
 });
 
@@ -83,6 +79,5 @@ gsap.to(bg, {
     toggleActions: "restart reverse play reverse",
     start: "top 90%",
     end: "bottom 90%",
-    markers: true
   }
 });
