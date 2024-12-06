@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  background-color: #440505;
+  font-family: "Outfit", sans-serif;
+  overflow-x: hidden;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+#thermoImg {
+  transform: scale(0.5) translateY(-50%) translateX(-300%);
+
+}
+
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10%;
+}
+
+h1 {
+  font-size: 8rem;
+  font-weight: 700;
+  margin: 8rem auto;
+}
+
+section {
+  min-height: 100vh;
+}
+
+.sec1{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #393943;
+  width: 80%;
+  margin: auto;
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+#veinImg {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1) translateX(-300%);
+}
+
+#redCells {
+    transform: translateX(300%);
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
+
+.center{
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

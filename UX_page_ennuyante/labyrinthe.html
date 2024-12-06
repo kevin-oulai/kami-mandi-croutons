@@ -4,23 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bouton Fuyant</title>
-    <div id="curseur"
-        style="position: absolute; top : 100px; width: 10px; height: 10px; background-color: blue; border-radius: 50%; pointer-events: none;">
-    </div>
+    <title>Bouton</title>
+    <div id="curseur" style="position: absolute; top : 100px; width: 50px; height: 50px; background-color: red; border-radius: 50%; pointer-events: none; border: 10px solid white;"></div>
+
+    <div id="souris" style="position: absolute; top : 10px; width: 5px; height: 5px; border-radius: 50%; pointer-events: none;" ><img src="cursor.png"/></div>
+    <div id="souris1" style="position: absolute; top : 10px; width: 5px; height: 5px; border-radius: 50%; pointer-events: none;" ><img src="cursor.png"/></div>
+    <div id="souris2" style="position: absolute; top : 10px; width: 5px; height: 5px; border-radius: 50%; pointer-events: none;" ><img src="cursor.png"/></div>
+    <div id="souris3" style="position: absolute; top : 10px; width: 5px; height: 5px; border-radius: 50%; pointer-events: none;" ><img src="cursor.png"/></div>
+    <div id="souris4" style="position: absolute; top : 10px; width: 5px; height: 5px; border-radius: 50%; pointer-events: none;" ><img src="cursor.png"/></div>
+    <div id="souris5" style="position: absolute; top : 10px; width: 5px; height: 5px; border-radius: 50%; pointer-events: none;" ><img src="cursor.png"/></div>
+
     <style>
         body {
+            cursor: url("cursor.png");
             margin: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
+            background-color: white;
         }
 
         #bouton {
             position: absolute;
-            /* Nécessaire pour le déplacement */
             padding: 10px 20px;
             background-color: #007bff;
             color: white;
@@ -28,20 +34,80 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        #curseur {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 15px solid red;
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+
+        img {
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            width: 22px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
     </style>
 </head>
 
 <body>
-    <button id="bouton">Attrape-moi !</button>
+    <button id="bouton">Je vais t'attrapper</button>
 
     <script>
+        let souris = document.getElementById("souris"); 
+        let souris1 = document.getElementById("souris1");  // Correction ici
+        let souris2 = document.getElementById("souris2");
+        let souris3 = document.getElementById("souris3");
+        let souris4 = document.getElementById("souris4");
+        let souris5 = document.getElementById("souris5");
         let bouton = document.getElementById("bouton");
-        let cible = document.getElementById("curseur")
+        let curseur = document.getElementById("curseur");
 
+        // Fonction pour vérifier si le bouton touche le curseur
+        function checkCollision() {
+            let boutonRect = bouton.getBoundingClientRect();
+            let curseurRect = curseur.getBoundingClientRect();
+
+            // Vérification si les rectangles du bouton et du curseur se chevauchent
+            if (
+                boutonRect.left < curseurRect.right &&
+                boutonRect.right > curseurRect.left &&
+                boutonRect.top < curseurRect.bottom &&
+                boutonRect.bottom > curseurRect.top
+            ) {
+                // Si une collision est détectée, rediriger vers page.html
+                window.location.href = "page.html"; // Remplace "page.html" par l'URL de ta page
+            }
+        }
+
+        // Déplacement du bouton avec la souris
         document.addEventListener("mousemove", (event) => {
             // Position du curseur
             let mouseX = event.clientX;
             let mouseY = event.clientY;
+
+            // Mettre à jour la position du point noir pour suivre le curseur
+            souris.style.left = mouseX - 100 + 'px';
+            souris.style.top = mouseY + 'px';
+            souris1.style.left = mouseX - 300 + 'px';
+            souris1.style.top = mouseY - 142 + 'px';
+            souris2.style.left = mouseX + 10 + 'px';
+            souris2.style.top = mouseY + 600 + 'px';
+            souris3.style.left = mouseX + 500 + 'px';
+            souris3.style.top = mouseY + 10 + 'px';
+            souris4.style.left = mouseX + 420 + 'px';
+            souris4.style.top = mouseY - 370 + 'px';
+            souris5.style.left = mouseX + 10 + 'px';
+            souris5.style.top = mouseY + 30 + 'px';
 
             // Position du bouton
             let boutonRect = bouton.getBoundingClientRect();
@@ -57,8 +123,8 @@
             let seuil = 100; // Distance minimum avant que le bouton "fuit"
             if (distance < seuil) {
                 // Déplacement du bouton dans la direction opposée
-                let offsetX = -distanceX * 0.3; // Multiplier pour ajuster la vitesse
-                let offsetY = -distanceY * 0.3;
+                let offsetX = -distanceX * 0.5;
+                let offsetY = -distanceY * 0.5;
 
                 let newLeft = boutonRect.left + offsetX;
                 let newTop = boutonRect.top + offsetY;
@@ -67,29 +133,31 @@
                 let maxWidth = window.innerWidth - boutonRect.width;
                 let maxHeight = window.innerHeight - boutonRect.height;
 
+                bouton.style.position = "absolute";
                 bouton.style.left = Math.min(Math.max(newLeft, 0), maxWidth) + "px";
                 bouton.style.top = Math.min(Math.max(newTop, 0), maxHeight) + "px";
-
-            function deplacerBouton() {
-                // Obtenir la largeur et la hauteur de la fenêtre
-                const largeurFenetre = window.innerWidth;
-                const hauteurFenetre = window.innerHeight;
-                const largeurBouton = cible.offsetWidth;
-                const hauteurBouton = cible.offsetHeight;
-
-                // Calculer une nouvelle position aléatoire pour le bouton
-                const nouvellePositionX = Math.random() * (largeurFenetre - largeurBouton);
-                const nouvellePositionY = Math.random() * (hauteurFenetre - hauteurBouton);
-
-                // Appliquer les nouvelles positions au bouton
-                cible.style.left = nouvellePositionX + "px";
-                cible.style.top = nouvellePositionY + "px";
             }
 
-            // Déplacer le bouton toutes les 2 secondes
-            setInterval(deplacerBouton(), 2000);
-        }
+            // Vérifier la collision entre le bouton et le curseur après chaque mouvement
+            checkCollision();
         });
+
+        // Fonction pour déplacer le curseur toutes les 2 secondes
+        function deplacerCurseur() {
+            // Calculer des coordonnées aléatoires pour le curseur
+            let largeurFenetre = window.innerWidth;
+            let hauteurFenetre = window.innerHeight;
+
+            let nouvellePositionX = Math.random() * (largeurFenetre - curseur.offsetWidth);
+            let nouvellePositionY = Math.random() * (hauteurFenetre - curseur.offsetHeight);
+
+            // Appliquer la nouvelle position au curseur
+            curseur.style.left = nouvellePositionX + "px";
+            curseur.style.top = nouvellePositionY + "px";
+        }
+
+        // Déplacer le curseur toutes les 1,5 secondes
+        setInterval(deplacerCurseur, 1500);
     </script>
 </body>
 
